@@ -3,14 +3,14 @@ const announcementsRouter = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 
 const {
-  getAnnouncements, createAnnouncement, deleteAnnouncement, editAnnouncement,
+  createAnnouncement, deleteAnnouncement, editAnnouncement,
 } = require('../controllers/announcements');
 
 const {
   URL_PATTERN,
 } = require('../utils/utils');
 
-announcementsRouter.get('/announcements', getAnnouncements);
+// announcementsRouter.get('/announcements', getAnnouncements);
 
 announcementsRouter.post('/announcements', celebrate({
   body: Joi.object().keys({

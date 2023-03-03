@@ -2,15 +2,15 @@ const linksRouter = require('express').Router();
 
 const { celebrate, Joi } = require('celebrate');
 
-const {
+/* const {
   URL_PATTERN,
-} = require('../utils/utils');
+} = require('../utils/utils'); */
 
 const {
-  getLinks, createLink, editLink, deleteLink,
+  createLink, editLink, deleteLink,
 } = require('../controllers/links');
 
-linksRouter.get('/links', getLinks);
+// linksRouter.get('/links', getLinks);
 
 linksRouter.patch('/links/:linkId', celebrate({
   body: Joi.object().keys({

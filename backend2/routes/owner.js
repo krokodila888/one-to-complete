@@ -7,10 +7,10 @@ const {
 } = require('../utils/utils');
 
 const {
-  getOwner, editOwnersProfile, /* setOwner */
+  editOwnersProfile, /* setOwner */
 } = require('../controllers/owner');
 
-ownersRouter.get('/owner', getOwner);
+// ownersRouter.get('/owner', getOwner);
 
 ownersRouter.patch('/owner/me', celebrate({
   body: Joi.object().keys({

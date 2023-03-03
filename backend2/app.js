@@ -5,7 +5,9 @@ const bodyParser = require('body-parser');
 const { errors, celebrate, Joi } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
-const { login, setOwner } = require('./controllers/owner');
+const { login, setOwner, getOwner } = require('./controllers/owner');
+const { getAnnouncements } = require('./controllers/announcements');
+const { getLinks } = require('./controllers/links');
 const ownersRouter = require('./routes/owner');
 const linksRouter = require('./routes/links');
 const announcementsRouter = require('./routes/announcements');
@@ -15,7 +17,7 @@ const {
 } = require('./utils/utils');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3001 } = process.env;
+const { PORT = 3002 } = process.env;
 
 const app = express();
 const { cors } = require('./middlewares/corsHandler');
@@ -59,20 +61,24 @@ app.post('/signup', celebrate({
   }),
 }), setOwner);
 
+app.get('/owner', getOwner);
+app.get('/links', getLinks);
+app.get('/announcements', getAnnouncements);
+
+app.use(auth);
+
 app.use(ownersRouter);
 app.use(announcementsRouter);
 app.use(linksRouter);
-
-app.use(auth);
 
 app.get('/signout', (req, res) => {
   res.clearCookie('jwt').send({ message: 'Выход' });
 });
 // app.get('/signout', logout);
 
-/*app.use(ownersRouter);
+/* app.use(ownersRouter);
 app.use(announcementsRouter);
-app.use(linksRouter);*/
+app.use(linksRouter); */
 app.use('*', () => {
   throw new NotFoundError('Вы сделали что-то не то. Вернитесь назад.');
 });
@@ -81,5 +87,5 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorsHandler);
 app.listen(PORT, () => {
-   console.log(`App listen to ${PORT} port`);
+  console.log(`App listen to ${PORT} port`);
 });

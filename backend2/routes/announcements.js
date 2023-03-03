@@ -33,13 +33,15 @@ announcementsRouter.delete('/announcements/:announcementId', celebrate({
 
 announcementsRouter.patch('/announcements/:announcementId', celebrate({
   body: Joi.object().keys({
-    title: Joi.string().required(),
+    annId: Joi.string().length(24).hex().required(),
+    title: Joi.string(),
     subTitle: Joi.string(),
-    text: Joi.string().required(),
-    date: Joi.string().required(),
+    text: Joi.string(),
+    date: Joi.string(),
     timeField: Joi.string(),
     broadcastLink: Joi.string(),
-    imageLink: Joi.string().required().pattern(URL_PATTERN),
+    imageLink: Joi.string().pattern(URL_PATTERN),
+    type: Joi.number(),
   }),
 }), editAnnouncement);
 

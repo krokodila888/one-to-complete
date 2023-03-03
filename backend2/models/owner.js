@@ -2,13 +2,21 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const isEmail = require('validator/lib/isEmail');
 const isURL = require('validator/lib/isURL');
-//const AuthError = require('../errors/AuthError');
+const {
+  ERROR_MESSAGE,
+} = require('../utils/utils');
+// const AuthError = require('../errors/AuthError');
 
 const ownerSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
     default: 'Тут все еще воробей, но теперь это поправимо',
+  },
+  role: {
+    type: String,
+    required: true,
+    default: 'admin',
   },
   about: {
     type: String,
@@ -31,6 +39,15 @@ const ownerSchema = new mongoose.Schema({
       message: 'Неправильный формат ссылки',
     },
   },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+    validate: {
+      validator: (v) => isEmail(v),
+      message: ERROR_MESSAGE.WRONG_EMAIL,
+    },
+  },
   password: {
     type: String,
   //  select: false,
@@ -38,7 +55,7 @@ const ownerSchema = new mongoose.Schema({
 });
 
 // eslint-disable-next-line func-names
-/*userSchema.statics.findUserByCredentials = function (email, password) {
+/* userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email }).select('+password').orFail(new AuthError('Данный пользователь не зарегистрирован'))
     .then((user) => bcrypt.compare(password, user.password)
       .then((matched) => {
@@ -47,6 +64,6 @@ const ownerSchema = new mongoose.Schema({
         }
         return user;
       }));
-};*/
+}; */
 
 module.exports = mongoose.model('owner', ownerSchema);

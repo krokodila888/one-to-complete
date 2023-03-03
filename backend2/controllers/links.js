@@ -44,10 +44,15 @@ module.exports.deleteLink = (req, res, next) => {
 };
 
 module.exports.editLink = (req, res, next) => {
-  const { text, link, imageLink } = req.body;
-  Link.findAndUpdate(req.link._id, { text, link, imageLink }, { new: true, runValidators: true })
-    .then((currentLink) => {
-      res.send({ data: currentLink });
+  const {
+    linkId, text, link, imageLink,
+  } = req.body;
+  const linkId1 = linkId;
+  Link.findOneAndUpdate({ _id: linkId1 }, { text, link, imageLink })
+    .then((link1) => {
+      if (!link1) {
+        next(new NotFoundError(ERROR_MESSAGE.LINK_NOT_FOUND));
+      } else res.send({ data: link1 });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {

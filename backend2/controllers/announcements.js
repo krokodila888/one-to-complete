@@ -49,13 +49,16 @@ module.exports.deleteAnnouncement = (req, res, next) => {
 
 module.exports.editAnnouncement = (req, res, next) => {
   const {
-    title, subTitle, text, date, timeField, broadcastLink, imageLink, type,
+    annId, title, subTitle, text, date, timeField, broadcastLink, imageLink, type,
   } = req.body;
-  Announcement.findAndUpdate(req.announcement._id, {
+  const annId1 = annId;
+  Announcement.findOneAndUpdate({ _id: annId1 }, {
     title, subTitle, text, date, timeField, broadcastLink, imageLink, type,
-  }, { new: true, runValidators: true })
+  })
     .then((announcement) => {
-      res.send({ data: announcement });
+      if (!announcement) {
+        next(new NotFoundError(ERROR_MESSAGE.LINK_NOT_FOUND));
+      } else { res.send({ data: announcement }); console.log(announcement); }
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {

@@ -14,6 +14,7 @@ const ERROR_MESSAGE = {
   CARD_DELETE_NO_ID: 'Запись с указанным _id не найдена. Что-то пошло не так',
   DELETE_LIKE_NO_ID: 'Передан несуществующий _id записи.',
   CARD_DEL_WRONG_ID: 'Передан некорректный _id.',
+  LINK_NOT_FOUND: 'Ссылка с таким ID не найдена',
 };
 
 const URL_PATTERN = /^:?https?:\/\/(www\.)?[a-zA-Z\d-]+\.[\w\d\-.~:/?#[\]@!$&'()*+,;=]{2,}#?$/;

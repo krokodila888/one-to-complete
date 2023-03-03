@@ -3,6 +3,10 @@ const allowedCors = [
   'http://anderstad.ru',
   'https://api.anderstad.ru',
   'http://api.anderstad.ru',
+  'https://158.160.54.105',
+  'http://158.160.54.105',
+  'https://api.158.160.54.105',
+  'http://api.158.160.54.105',
   'http://localhost:3001',
   'http://localhost:3000',
 ];
